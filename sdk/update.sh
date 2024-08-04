@@ -1,0 +1,1 @@
+wget https://github.com/Sable/android-platforms/raw/master/android-34/android.jar
