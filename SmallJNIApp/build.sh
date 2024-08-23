@@ -31,8 +31,13 @@ $CC $CFLAGS -DANDROID -ggdb3 -shared jni/1.c -o lib/arm64-v8a/libnativeworld.so
 
 # compile java class
 
+rm -r obj 2> /dev/null
+
 javac -h jni -d obj -source 1.7 -target 1.7 -cp src src/com/example/simple_jni/NativeWorld.java
 javac -Xlint:deprecation,-options -d obj -sourcepath src -source 1.7 -target 1.7 --class-path $ANDROID_JAR ./src/com/example/simple_jni/MainActivity.java
+
+[ `find obj/ -iname "*.class" | wc -l` -lt 2 ] && exit
+
 
 # convert to DEX
 dx --dex --verbose --no-optimize --keep-classes --output=bin/classes.dex obj
