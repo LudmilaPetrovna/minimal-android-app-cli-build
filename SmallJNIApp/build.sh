@@ -27,7 +27,15 @@ export PLATFORM_ROOT=$NDK/platforms/android-21/arch-arm64/
 export CFLAGS="--sysroot $PLATFORM_ROOT"
 
 mkdir -p lib/arm64-v8a
+
+# debug
+rm lib/arm64-v8a/libnativeworld.so
 $CC $CFLAGS -DANDROID -ggdb3 -shared jni/1.c -o lib/arm64-v8a/libnativeworld.so
+
+# optimized
+rm lib/arm64-v8a/libnativeworld.so
+$CC $CFLAGS -DANDROID -O0 -fvisibility=hidden -shared jni/1.c -o lib/arm64-v8a/libnativeworld.so
+$STRIP --strip-all --discard-all lib/arm64-v8a/libnativeworld.so
 
 # compile java class
 
@@ -45,7 +53,7 @@ dx --dex --verbose --no-optimize --keep-classes --output=bin/classes.dex obj
 # package to APK resources and add DEX
 aapt p -f -F bin/out.apk -I $ANDROID_JAR -S res -M AndroidManifest.xml
 zip -9j bin/out.apk bin/classes.dex
-zip -0r bin/out.apk lib
+zip -0r bin/out.apk lib -i "*.so"
 
 # Generate new key, if here none
 

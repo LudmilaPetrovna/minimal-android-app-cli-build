@@ -1,5 +1,6 @@
 #ifdef ANDROID
 
+#include <stdio.h>
 #include "com_example_simple_jni_NativeWorld.h"
 
 #else
@@ -27,6 +28,7 @@ static char*(*ways[])()={way1,way2,way3,0,0};
 static int global_id=-1;
 
 char *way_switch(int i){
+printf("access way_switch\n");
 char *ret=0;
 switch(i){
 case 0:
@@ -48,6 +50,7 @@ return(ret);
 }
 
 char *way_switch_global(){
+printf("access way_switch_global\n");
 char *ret=0;
 switch(global_id){
 case 0:
@@ -69,14 +72,17 @@ return(ret);
 }
 
 char *way_array(int i){
+printf("access way_array\n");
 return(ways[i]());
 }
 
 char *way_array_global(){
+printf("access way_array_global\n");
 return(ways[global_id]());
 }
 
 void set_id(int i){
+printf("access set_id\n");
 global_id=i;
 }
 
