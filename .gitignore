@@ -2,6 +2,14 @@
 .gradle/
 build/
 
+bin/
+lib/
+res/
+obj/
+
+shit.key
+ic_launcher-web.png
+
 # Local configuration file (sdk path, etc)
 local.properties
 
